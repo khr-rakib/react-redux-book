@@ -1,0 +1,43 @@
+import React, { useState } from "react";
+import Avatar from "react-avatar";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../actions/contactAction";
+
+const Contact = ({ contact, selectAll }) => {
+  const dispatch = useDispatch();
+  const { id, name, phone, email } = contact;
+  return (
+    <tr>
+      <th scope="row">
+        <div className="custom-control custom-checkbox">
+          <input
+            checked={selectAll}
+            type="checkbox"
+            className="custom-control-input"
+          />
+          <label className="custom-control-label"></label>
+        </div>
+      </th>
+      <td>
+        {" "}
+        <Avatar name={name} size="45" round={true} className="mr-2" /> {name}
+      </td>
+      <td>{phone}</td>
+      <td>{email}</td>
+      <td className="actions">
+        <Link to={`/contacts/edit/${id}`}>
+          <span className="material-icons mr-2">edit</span>
+        </Link>
+        <span
+          onClick={() => dispatch(deleteContact(id))}
+          className="material-icons text-danger"
+        >
+          remove_circle
+        </span>
+      </td>
+    </tr>
+  );
+};
+
+export default Contact;
